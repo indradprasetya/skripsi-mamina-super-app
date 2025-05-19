@@ -14,7 +14,7 @@ const formatDate = (dateString) => {
 
 <template>
     <Head :title="article.title" />
-    <div class="max-w-4xl mx-auto">
+    <div class="py-6">
         <!-- Back Button -->
         <Link :href="route('article.index')"
             class="mb-6 flex items-center text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300">
@@ -36,7 +36,7 @@ const formatDate = (dateString) => {
 
         <!-- Article Image -->
         <div class="mb-8">
-            <img :src="'/storage/' + article.thumb" :alt="article.title" class="w-full h-[400px] object-cover rounded-lg">
+            <img :src="'/img/' + article.thumb" :alt="article.title" class="w-full h-[400px] object-cover rounded-lg">
         </div>
 
         <!-- Article Content -->

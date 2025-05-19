@@ -98,7 +98,7 @@ onMounted(() => {
 
         <!-- Artikel -->
         <div id="article" class="mt-4">
-            <p class="text-md font-semibold text-teal-600 dark:text-teal-400">Pelajari Ilmu Baru Yuk</p>
+            <p class="text-md font-semibold text-teal-600 dark:text-teal-400">Berita dan Informasi Mamina</p>
         </div>
         <!-- Konten -->
         <div
@@ -113,9 +113,9 @@ onMounted(() => {
             <!-- Konten di atas gambar -->
             <div class="relative z-10 p-4">
                 <p class="font-base text-sm">
-                    Apa aja sih yang<br />
-                    dibutuhin anak kita<br />
-                    di usianya sekarang?
+                    Temukan Informasi <br />
+                    Kesehatan dan layanan <br />
+                    Mamina disini 💖
                 </p>
                 <Link :href="route('article.index')"
                     class="inline-block mt-3 px-4 py-2 text-xs font-base text-teal-600 bg-white rounded-full hover:bg-gray-100 transition dark:text-white dark:bg-teal-800 dark:hover:bg-teal-600">

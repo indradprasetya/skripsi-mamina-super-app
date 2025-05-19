@@ -6,13 +6,13 @@ use App\Models\News;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ArticleController extends Controller
+class NewsController extends Controller
 {
     public function index()
     {
         $news = News::orderBy('date', 'desc')->get();
 
-        return Inertia::render('Article', [
+        return Inertia::render('News/Index', [
             'news' => $news
         ]);
     }
@@ -21,7 +21,7 @@ class ArticleController extends Controller
     {
         $article = News::findOrFail($id);
 
-        return Inertia::render('Article/Show', [
+        return Inertia::render('News/Show', [
             'article' => $article
         ]);
     }

@@ -14,8 +14,9 @@ const formatDate = (dateString) => {
 </script>
 
 <template>
+
     <Head :title="$page.component" />
-    <div>
+    <div class="py-6">
         <p class="text-xl font-bold text-teal-600 dark:text-teal-400 mb-5">Artikel</p>
 
         <div class="space-y-4">
@@ -25,7 +26,7 @@ const formatDate = (dateString) => {
                     <div class="flex p-4 gap-2">
                         <!-- Thumbnail -->
                         <div class="w-32 h-24 flex-shrink-0">
-                            <img :src="'/storage/' + article.thumb" :alt="article.title" class="w-full h-full object-cover rounded">
+                            <img :src="'/img/' + article.thumb" :alt="article.title" class="w-full h-full object-cover rounded">
                         </div>
 
                         <!-- Content -->

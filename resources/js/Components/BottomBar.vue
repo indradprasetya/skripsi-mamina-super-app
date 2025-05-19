@@ -17,8 +17,8 @@
                 :class="{ 'text-teal-600 dark:text-teal-400': $page.component === 'Home' }">Beranda</span>
             </Link>
 
-            <!-- Food Planner -->
-            <Link :href="route('food-planner.index')" type="button"
+            <!-- Nutrition -->
+            <Link :href="route('nutrition.index')" type="button"
                 class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-200 dark:hover:bg-gray-800 group"
                 :class="{ 'bg-gray-200 dark:bg-gray-800': $page.component === 'FoodPlanner/Index' }">
                 <svg class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-teal-600 dark:group-hover:text-teal-400"

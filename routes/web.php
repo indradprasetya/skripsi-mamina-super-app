@@ -4,13 +4,14 @@ use Inertia\Inertia;
 use App\Models\Child;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\GrowthController;
 use App\Http\Controllers\RecordController;
-use App\Http\Controllers\FoodPlannerController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\AntropometriApiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FoodPlannerController;
+use App\Http\Controllers\AntropometriApiController;
+use App\Http\Controllers\NutritionController;
 
 // =========================================
 // Public Routes
@@ -18,7 +19,7 @@ use App\Http\Controllers\ProfileController;
 Route::inertia('/', 'Home')->name('home');
 
 // News Routes
-Route::controller(ArticleController::class)->group(function () {
+Route::controller(NewsController::class)->group(function () {
     Route::get('/news', 'index')->name('article.index');
     Route::get('/news/{id}', 'show')->name('article.show');
 });
@@ -85,10 +86,10 @@ Route::middleware('auth')->group(function () {
         Route::delete('/records/{record}', 'destroy')->name('records.destroy');
     });
 
-    // Food Planner Routes
-    Route::controller(FoodPlannerController::class)->group(function () {
-        Route::get('/food-planner', 'index')->name('food-planner.index');
-        Route::get('/food-planner/calculate-calories/{id_anak}', 'calculateCalories')->name('food-planner.calculate-calories');
+    // Nutrition Routes
+    Route::controller(NutritionController::class)->group(function () {
+        Route::get('/nutrition', 'index')->name('nutrition.index');
+        Route::get('/nutrition/calculate-calories/{id_anak}', 'calculateCalories')->name('nutrition.calculate-calories');
     });
 
     // Z-Score Information Route

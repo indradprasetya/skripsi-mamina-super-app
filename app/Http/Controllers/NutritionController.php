@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-class FoodPlannerController extends Controller
+class NutritionController extends Controller
 {
     public function index(Request $request)
     {
@@ -41,7 +41,7 @@ class FoodPlannerController extends Controller
                 ];
             });
 
-        return Inertia::render('FoodPlanner/Index', [
+        return Inertia::render('Nutrition/Index', [
             'foods' => $foods,
             'categories' => $categories,
             'children' => $children,

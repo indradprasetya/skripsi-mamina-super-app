@@ -103,35 +103,35 @@ watch([search, selectedCategory], debounce(([newSearch, newCategory]) => {
 
     <Head :title="$page.component" />
     <div class="py-6">
-        <p class="text-xl font-bold text-teal-600 dark:text-teal-400 mb-6">Food Planner</p>
+        <p class="text-xl font-bold text-teal-700 dark:text-teal-400 mb-6">Food Planner</p>
         <!-- Children's Calorie Recommendations -->
         <div v-if="childrenWithCalories.length > 0" class="mb-6">
-            <h2 class="text-md font-semibold text-gray-900 dark:text-white mb-2">Rekomendasi Kalori Anak</h2>
+            <h2 class="text-md font-semibold text-gray-800 dark:text-white mb-2">Rekomendasi Kalori Anak</h2>
             <div class="space-y-3">
                 <div v-for="child in childrenWithCalories" :key="child.id_anak"
-                    class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                    class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border border-gray-200 dark:border-gray-700">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="text-base font-medium text-gray-900 dark:text-white">
+                            <h3 class="text-base font-medium text-gray-800 dark:text-white">
                                 {{ child.nama }} ({{ getAgeInMonths(child.tgl_lahir) }})
                             </h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
                                 Kebutuhan Kalori: {{ child.kalori }} kcal
                             </p>
                         </div>
                     </div>
                     <div class="mt-2 grid grid-cols-3 gap-2 text-xs">
-                        <div class="bg-gray-50 dark:bg-gray-700 p-2 rounded text-center">
-                            <span class="text-gray-500 dark:text-gray-400">Protein:</span>
-                            <span class="text-gray-900 dark:text-white ml-1">{{ child.rekomendasi.protein }}g</span>
+                        <div class="bg-gray-100 dark:bg-gray-700 p-2 rounded text-center">
+                            <span class="text-gray-600 dark:text-gray-400">Protein:</span>
+                            <span class="text-gray-800 dark:text-white ml-1">{{ child.rekomendasi.protein }}g</span>
                         </div>
-                        <div class="bg-gray-50 dark:bg-gray-700 p-2 rounded text-center">
-                            <span class="text-gray-500 dark:text-gray-400">Karbo:</span>
-                            <span class="text-gray-900 dark:text-white ml-1">{{ child.rekomendasi.karbohidrat }}g</span>
+                        <div class="bg-gray-100 dark:bg-gray-700 p-2 rounded text-center">
+                            <span class="text-gray-600 dark:text-gray-400">Karbo:</span>
+                            <span class="text-gray-800 dark:text-white ml-1">{{ child.rekomendasi.karbohidrat }}g</span>
                         </div>
-                        <div class="bg-gray-50 dark:bg-gray-700 p-2 rounded text-center">
-                            <span class="text-gray-500 dark:text-gray-400">Lemak:</span>
-                            <span class="text-gray-900 dark:text-white ml-1">{{ child.rekomendasi.lemak }}g</span>
+                        <div class="bg-gray-100 dark:bg-gray-700 p-2 rounded text-center">
+                            <span class="text-gray-600 dark:text-gray-400">Lemak:</span>
+                            <span class="text-gray-800 dark:text-white ml-1">{{ child.rekomendasi.lemak }}g</span>
                         </div>
                     </div>
                 </div>
@@ -139,44 +139,44 @@ watch([search, selectedCategory], debounce(([newSearch, newCategory]) => {
         </div>
 
         <!-- Search and Filters -->
-        <div class="grid grid-cols-1 sm:grid-cols-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <!-- Search -->
-            <TextInput name="Search" id="search" v-model="search" placeholder="Search foods..." />
+            <TextInput name="Search" id="search" v-model="search" placeholder="Search foods..." class="bg-white dark:bg-gray-800" />
 
             <!-- Category Filter -->
             <Select name="Category" id="category" v-model="selectedCategory" :options="categoriesWithAll"
-                optionValue="id_kategori" optionLabel="nama_kategori" />
+                optionValue="id_kategori" optionLabel="nama_kategori" class="bg-white dark:bg-gray-800" />
         </div>
 
         <!-- Food Grid -->
         <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <div v-for="food in foods" :key="food.id_makanan"
-                class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+                class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg border border-gray-200 dark:border-gray-700">
                 <div class="p-4">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ food.nama_makanan }} <span
-                            class="text-sm text-gray-500 dark:text-gray-400">(per {{ food.satuan }})</span></h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ food.category.nama_kategori }}</p>
+                    <h3 class="text-lg font-medium text-gray-800 dark:text-white">{{ food.nama_makanan }} <span
+                            class="text-sm text-gray-600 dark:text-gray-400">(per {{ food.satuan }})</span></h3>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ food.category.nama_kategori }}</p>
 
                     <div class="mt-4 space-y-2">
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500 dark:text-gray-400">Kalori:</span>
-                            <span class="text-gray-900 dark:text-white">{{ food.kalori }} kcal</span>
+                            <span class="text-gray-600 dark:text-gray-400">Kalori:</span>
+                            <span class="text-gray-800 dark:text-white">{{ food.kalori }} kcal</span>
                         </div>
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500 dark:text-gray-400">Protein:</span>
-                            <span class="text-gray-900 dark:text-white">{{ food.protein }}g</span>
+                            <span class="text-gray-600 dark:text-gray-400">Protein:</span>
+                            <span class="text-gray-800 dark:text-white">{{ food.protein }}g</span>
                         </div>
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500 dark:text-gray-400">Karbohidrat:</span>
-                            <span class="text-gray-900 dark:text-white">{{ food.karbohidrat }}g</span>
+                            <span class="text-gray-600 dark:text-gray-400">Karbohidrat:</span>
+                            <span class="text-gray-800 dark:text-white">{{ food.karbohidrat }}g</span>
                         </div>
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500 dark:text-gray-400">Lemak:</span>
-                            <span class="text-gray-900 dark:text-white">{{ food.lemak }}g</span>
+                            <span class="text-gray-600 dark:text-gray-400">Lemak:</span>
+                            <span class="text-gray-800 dark:text-white">{{ food.lemak }}g</span>
                         </div>
                     </div>
 
-                    <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">{{ food.deskripsi }}</p>
+                    <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">{{ food.deskripsi }}</p>
                 </div>
             </div>
         </div>
