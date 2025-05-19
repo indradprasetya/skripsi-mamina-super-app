@@ -159,24 +159,30 @@ const zScore = computed(() => {
     <div v-if="loading">Memuat data referensi...</div>
     <div v-else>
         <!-- Status Gizi IMT/U -->
-        <div class="mt-4">
-            <div class="flex items-center space-x-3 mb-2">
-                <div class="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
-                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">IMT/U (Z-Score)</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                        <span class="text-blue-600 dark:text-blue-400 font-medium">
-                            {{ zScore }}
-                        </span>
-                        | {{ explainIMTU(zScore) }}
-                    </p>
-                </div>
+        <div :class="[
+            'rounded-lg p-4 mb-6 flex items-center shadow-md gap-4',
+            zScore >= -2 && zScore <= 2 ? 'bg-green-100' :
+            (zScore >= -3 && zScore < -2) || (zScore > 2 && zScore <= 3) ? 'bg-yellow-100' :
+            'bg-red-100 '
+        ]">
+            <img
+                :src="`/img/face/${zScore >= -2 && zScore <= 2 ? 'happy' :
+                    ((zScore >= -3 && zScore < -2) || (zScore > 2 && zScore <= 3)) ? 'flat' :
+                    'unhappy'}.png`"
+                class="w-14 h-20 mr-4 flex-shrink-0"
+                alt="Status Gizi"
+            />
+            <div>
+                <p class="text-sm font-base text-gray-800">Berdasarkan data IMT/U</p>
+                <p :class="[
+                    'text-md font-bold',
+                    zScore >= -2 && zScore <= 2 ? 'text-green-800' :
+                    (zScore >= -3 && zScore < -2) || (zScore > 2 && zScore <= 3) ? 'text-yellow-800' :
+                    'text-red-800'
+                ]">
+                    {{ explainIMTU(zScore)}}
+                </p>
+                <p class="text-sm mt-1 text-gray-700 font-medium">Z-score: <span class="font-mono">{{ zScore > 0 ? '+' : '' }}{{ zScore }} SD</span></p>
             </div>
         </div>
 
