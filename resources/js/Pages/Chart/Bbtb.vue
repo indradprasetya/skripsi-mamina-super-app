@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { Scatter } from 'vue-chartjs';
+import { getDateIndonesia } from '../../utils/date';
 import {
     Chart as ChartJS,
     Title,
@@ -158,6 +159,8 @@ const zScore = computed(() => {
     );
 });
 
+
+
 </script>
 
 <template>
@@ -165,7 +168,7 @@ const zScore = computed(() => {
     <div v-else>
         <!-- Status Gizi BB/TB -->
         <div :class="[
-            'rounded-lg p-4 mb-6 flex items-center shadow-md gap-4',
+            'rounded-lg p-4 mb-2 flex items-center shadow-md gap-4',
             zScore >= -2 && zScore <= 2 ? 'bg-green-100' :
                 (zScore >= -3 && zScore < -2) || (zScore > 2 && zScore <= 3) ? 'bg-yellow-100' :
                     'bg-red-100 '
@@ -174,7 +177,7 @@ const zScore = computed(() => {
                 ((zScore >= -3 && zScore < -2) || (zScore > 2 && zScore <= 3)) ? 'flat' :
                     'unhappy'}.png`" class="w-14 h-20 mr-4 flex-shrink-0" alt="Status Gizi" />
             <div>
-                <p class="text-sm font-base text-gray-800">Berdasarkan data BB/TB</p>
+                <p class="text-xs font-base text-gray-800">Berdasarkan data BB/TB</p>
                 <p :class="[
                     'text-md font-bold',
                     zScore >= -2 && zScore <= 2 ? 'text-green-800' :
@@ -183,11 +186,18 @@ const zScore = computed(() => {
                 ]">
                     {{ explainBBTB(zScore) }}
                 </p>
-                <p class="text-sm mt-1 text-gray-700 font-medium">Z-score: <span class="font-mono">{{ zScore > 0 ? '+' :
+                <p class="text-xs mt-1 text-gray-700 font-medium">Z-score: <span class="font-mono">{{ zScore > 0 ? '+' :
                         '' }}{{ zScore }} SD</span></p>
+                <p class="text-2xs text-gray-500 ">Data terakhir: {{ getDateIndonesia(props.child.records[0]?.tanggal_catatan) }}</p>
             </div>
         </div>
 
+        <p>
+            <Link :href="route('zscore.info')"
+                class="text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 text-xs">Apa itu
+            Z-score? Klik untuk pelajari
+            </Link>
+        </p>
         <!-- Chart -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-6 mt-4">
             <Scatter v-if="chartData" :data="{
@@ -208,7 +218,7 @@ const zScore = computed(() => {
                         data: chartData.recordPoints,
                         backgroundColor: '#0ea5e9',
                         borderColor: '#0ea5e9',
-                        pointRadius: 5,
+                        pointRadius: 3,
                         pointStyle: 'circle',
                         type: 'scatter',
                         order: 2

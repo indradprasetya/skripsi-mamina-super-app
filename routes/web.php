@@ -4,24 +4,28 @@ use Inertia\Inertia;
 use App\Models\Child;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\GrowthController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NutritionController;
 use App\Http\Controllers\FoodPlannerController;
 use App\Http\Controllers\AntropometriApiController;
-use App\Http\Controllers\NutritionController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 // =========================================
 // Public Routes
 // =========================================
-Route::inertia('/', 'Home')->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // News Routes
 Route::controller(NewsController::class)->group(function () {
-    Route::get('/news', 'index')->name('article.index');
-    Route::get('/news/{id}', 'show')->name('article.show');
+    Route::get('/news', 'index')->name('news.index');
+    Route::get('/news/{id}', 'show')->name('news.show');
 });
 
 // Location API Routes
@@ -51,7 +55,7 @@ Route::middleware('guest')->group(function () {
 // =========================================
 // Authenticated Routes
 // =========================================
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     // API Routes
     Route::get('/api/antropometri/{tipe}/{gender}', [AntropometriApiController::class, 'get'])->name('antropometri.get');
 
@@ -94,4 +98,32 @@ Route::middleware('auth')->group(function () {
 
     // Z-Score Information Route
     Route::inertia('/zscore/info', 'ZScoreInfo')->name('zscore.info');
+
+    // Password Routes
+    Route::get('/password', [AuthController::class, 'editPassword'])->name('password.edit');
+    Route::put('/password', [AuthController::class, 'updatePassword'])->name('password.update');
+});
+
+// Route::get('/email/verify', function () {
+//     return Inertia::render('Auth/VerifyEmail');
+// })->middleware('auth')->name('verification.notice');
+// n
+// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//     $request->fulfill();
+//     return redirect()->route('home');
+// })->middleware(['auth', 'signed'])->name('verification.verify');
+
+// Route::post('/email/verification-notification', function (Request $request) {
+//     $request->user()->sendEmailVerificationNotification();
+//     return back()->with('message', 'Verification link sent!');
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/api/proxy/products', function (Request $request) {
+    $response = Http::withHeaders([
+        'username' => 'indrayana'
+    ])->withOptions([
+        'verify' => false
+    ])->get('https://api.harsyadteknologi.com:8000/mobile/produk', $request->query());
+
+    return $response->json();
 });

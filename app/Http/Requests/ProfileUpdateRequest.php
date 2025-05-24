@@ -31,11 +31,11 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'jenis_kelamin' => 'required',
             'alamat' => 'required|string|max:100',
-            'id_provinsi' => 'required|exists:d_provinsi,id_provinsi',
-            'id_kota' => 'required|exists:d_kota,id_kota',
-            'id_kecamatan' => 'required|exists:d_kecamatan,id_kecamatan',
-            'id_kelurahan' => 'required|exists:d_kelurahan,id_kelurahan',
-            'id_cabang' => 'nullable|exists:m_cabang,id_cabang',
+            'id_provinsi' => 'required',
+            'id_kota' => 'required',
+            'id_kecamatan' => 'required',
+            'id_kelurahan' => 'required',
+            'id_cabang' => 'nullable',
         ];
     }
 

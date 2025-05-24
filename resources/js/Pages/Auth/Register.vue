@@ -62,7 +62,7 @@ const submit = () => {
 
 <template>
     <Head title="Register" />
-    <div>
+    <div class="py-6">
         <p class="text-xl font-bold text-teal-600 dark:text-teal-400 mb-5">
             Registrasi Pelanggan
         </p>

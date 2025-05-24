@@ -99,6 +99,7 @@ import { Head } from '@inertiajs/vue3';
                             ditangani lebih lanjut untuk mencegah terjadinya gizi lebih dan obesitas.
                         </p>
                     </div>
+
                 </div>
             </div>
         </div>

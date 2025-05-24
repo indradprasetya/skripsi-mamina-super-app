@@ -19,10 +19,10 @@ class NewsController extends Controller
 
     public function show($id)
     {
-        $article = News::findOrFail($id);
+        $news = News::findOrFail($id);
 
         return Inertia::render('News/Show', [
-            'article' => $article
+            'news' => $news
         ]);
     }
 }

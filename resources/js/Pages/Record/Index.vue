@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import debounce from 'lodash/debounce';
+import { getDateIndonesia } from '../../utils/date';
 
 
 const props = defineProps({
@@ -33,12 +34,6 @@ const hapus = (id) => {
     }
 };
 
-const getDateIndonesia = date =>
-    new Date(date).toLocaleDateString("id-ID", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
 
 const resetSearch = () => {
     search.value = '';

@@ -18,7 +18,7 @@ class News extends Model
         'content',
         'created_at',
         'created_by',
-        'updated_at',
+    'updated_at',
         'updated_by'
     ];
 
