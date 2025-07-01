@@ -16,6 +16,41 @@ const search = ref(props.filters.search || '');
 const selectedCategory = ref(props.filters.category || '');
 const isCalculatorOpen = ref(false);
 
+const nutritionTable = [
+    {
+        minMonths: 0,
+        maxMonths: 5,
+        energi: 550,
+        protein: 9,
+        lemak: 31,
+        karbohidrat: 59
+    },
+    {
+        minMonths: 6,
+        maxMonths: 11,
+        energi: 800,
+        protein: 15,
+        lemak: 35,
+        karbohidrat: 105
+    },
+    {
+        minMonths: 12,
+        maxMonths: 35,
+        energi: 1350,
+        protein: 20,
+        lemak: 45,
+        karbohidrat: 215
+    },
+    {
+        minMonths: 36,
+        maxMonths: 71,
+        energi: 1400,
+        protein: 25,
+        lemak: 50,
+        karbohidrat: 220
+    }
+];
+
 const getAgeInMonths = (birthdateStr) => {
     const birthdate = new Date(birthdateStr);
     const now = new Date();
@@ -37,31 +72,29 @@ const calculateCalories = (birthdateStr) => {
     }
     months = months < 0 ? 0 : months;
 
-    // Calculate base calories based on age in months
-    const baseCalories = (() => {
-        if (months <= 6) return 600;      // 0-6 months
-        if (months <= 12) return 800;     // 7-12 months
-        if (months <= 24) return 1000;    // 13-24 months
-        if (months <= 36) return 1200;    // 25-36 months
-        if (months <= 48) return 1300;    // 37-48 months
-        if (months <= 60) return 1400;    // 49-60 months
-        if (months <= 84) return 1600;    // 61-84 months
-        if (months <= 120) return 1800;   // 85-120 months
-        return 2000;                      // >120 months
-    })();
+    // Cari kelompok umur yang sesuai
+    const group = nutritionTable.find(g => months >= g.minMonths && months <= g.maxMonths);
 
-    // Adjust for activity level
-    const activityMultiplier = 1.2; // Moderate activity
-    const calories = baseCalories * activityMultiplier;
-
-    return {
-        calories: Math.round(calories),
-        recommendations: {
-            protein: Math.round(calories * 0.15 / 4),
-            karbohidrat: Math.round(calories * 0.55 / 4),
-            lemak: Math.round(calories * 0.30 / 9),
-        }
-    };
+    if (group) {
+        return {
+            calories: group.energi,
+            recommendations: {
+                protein: group.protein,
+                karbohidrat: group.karbohidrat,
+                lemak: group.lemak,
+            }
+        };
+    } else {
+        // Jika di luar range, pakai default (misal: kosong atau 0)
+        return {
+            calories: 0,
+            recommendations: {
+                protein: 0,
+                karbohidrat: 0,
+                lemak: 0,
+            }
+        };
+    }
 };
 
 const childrenWithCalories = computed(() => {
@@ -142,11 +175,12 @@ const removeFoodFromCalculator = (foodId) => {
     }
 };
 
-// Watch for changes in quantities and save
+// Watch for changes in quantities and save to local
 watch(quantities, () => {
     saveData();
 }, { deep: true });
 
+// calculate real-time
 const calculateTotalNutrition = computed(() => {
     return selectedFoods.value.reduce((total, food) => {
         const quantity = quantities.value[food.id_makanan] || 0;

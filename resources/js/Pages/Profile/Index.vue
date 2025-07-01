@@ -2,6 +2,19 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
 
+const testNotification = async () => {
+    try {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+            new Notification('Test Notifikasi', {
+                body: 'Ini adalah percobaan notifikasi dari Mamina Super App'
+            });
+        }
+    } catch (error) {
+        console.error('Error showing notification:', error);
+    }
+};
+
 onMounted(() => {
     const themeToggle = document.getElementById('theme-toggle')
 
@@ -81,6 +94,15 @@ onMounted(() => {
             <!-- Actions -->
             <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
                 <div class="flex flex-col gap-4">
+                    <button @click="testNotification"
+                        class="inline-flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                        Coba Notifikasi
+                    </button>
+
                     <Link :href="route('child.index')"
                         class="inline-flex items-center justify-center px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium rounded-md transition">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,7 +130,7 @@ onMounted(() => {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                     </svg>
-                    Ganti Password
+                    Ganti Kata Sandi
                     </Link>
 
                     <Link :href="route('logout')" method="post" as="button"

@@ -50,6 +50,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'mobile_token',
     ];
 
+    protected $casts = [
+        'nomor' => 'encrypted',
+        'telp' => 'encrypted',
+        'nama' => 'encrypted',
+        'alamat' => 'encrypted',
+    ];
+
+
     /**
      * Get the attributes that should be cast.
      *

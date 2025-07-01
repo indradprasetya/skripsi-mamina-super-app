@@ -31,6 +31,7 @@ const props = defineProps({ child: Object });
 const refData = ref([]); // referensi data
 const loading = ref(true);
 
+// narik api sesuai kriteria kebutuhan
 onMounted(async () => {
     loading.value = true;
     const gender = props.child.jenis_kelamin === 'L' ? 'laki' : 'perempuan';
@@ -38,6 +39,39 @@ onMounted(async () => {
     refData.value = data;
     loading.value = false;
 });
+
+// Penjelasan status gizi BB/U
+function explainBBU(z) {
+    if (z === null || z === undefined || isNaN(z)) return '-';
+    z = parseFloat(z);
+    if (z < -3) return 'Berat badan sangat kurang (severely underweight)';
+    if (z >= -3 && z < -2) return 'Berat badan kurang (underweight)';
+    if (z >= -2 && z <= 1) return 'Berat badan normal';
+    if (z > 1) return 'Risiko berat badan lebih';
+    return '-';
+}
+
+//Memasukkan data untuk perhitungan
+const zScore = computed(() => {
+    if (!props.child.records[0] || !refData.value.length) return null;
+    const umur = Number(props.child.records[0].umur);
+    const berat = Number(props.child.records[0].berat_badan);
+    const ref = refData.value.find(r => Number(r.month) === umur);
+    if (!ref) return null;
+    return calculateZScoreRumus(
+        berat,
+        Number(ref.l),
+        Number(ref.m),
+        Number(ref.s)
+    );
+});
+
+//Perhitungan Z-Score
+function calculateZScoreRumus(Y, L, M, S) {
+    if (!Y || !L || !M || !S) return null;
+
+    return (((Math.pow(Y / M, L) - 1) / (L * S))).toFixed(2);
+}
 
 const chartData = computed(() => {
     if (!refData.value.length || !props.child.records.length) return null;
@@ -110,36 +144,9 @@ const chartOptions = computed(() => ({
     }
 }));
 
-function calculateZScoreRumus(Y, L, M, S) {
-    if (!Y || !L || !M || !S) return null;
 
-    return (((Math.pow(Y / M, L) - 1) / (L * S))).toFixed(2);
-}
 
-// Penjelasan status gizi BB/U
-function explainBBU(z) {
-    if (z === null || z === undefined || isNaN(z)) return '-';
-    z = parseFloat(z);
-    if (z < -3) return 'Berat badan sangat kurang (severely underweight)';
-    if (z >= -3 && z < -2) return 'Berat badan kurang (underweight)';
-    if (z >= -2 && z <= 1) return 'Berat badan normal';
-    if (z > 1) return 'Risiko berat badan lebih';
-    return '-';
-}
 
-const zScore = computed(() => {
-    if (!props.child.records[0] || !refData.value.length) return null;
-    const umur = Number(props.child.records[0].umur);
-    const berat = Number(props.child.records[0].berat_badan);
-    const ref = refData.value.find(r => Number(r.month) === umur);
-    if (!ref) return null;
-    return calculateZScoreRumus(
-        berat,
-        Number(ref.l),
-        Number(ref.m),
-        Number(ref.s)
-    );
-});
 
 
 </script>
